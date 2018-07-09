@@ -36,12 +36,12 @@ body {
   justify-content: center;
   align-items: center;
   display: flex;
-  transition: 0.5s ease-in-out;
+  transition: 0.25s ease-in-out;
 }
 
 .square:hover {
   background: rgb(155, 155, 155);
-  transition: 0.25s ease-in-out;
+  transition: 0.15s ease-in-out;
 }
 
 .letter {
@@ -56,10 +56,18 @@ body {
 button {
   font-family: Helvetica, sans-serif;
   font-size: 2rem;
+  line-height: 2rem;
   text-align: center;
   padding: 1rem 1rem;
   color: #eee;
   background: #222;
   font-weight: bold;
-  border-width: 0;
+  border: none;
+  transition: 0.5s ease-in-out;
+  margin: 0 auto;
+}
+
+button:hover {
+  background: rgb(155, 155, 155);
+  transition: 0.15s ease-in-out;
 }
