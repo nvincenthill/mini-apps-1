@@ -36,12 +36,17 @@ body {
   justify-content: center;
   align-items: center;
   display: flex;
-  transition: 0.25s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .square:hover {
-  background: rgb(155, 155, 155);
-  transition: 0.15s ease-in-out;
+  transition: 1s cubic-bezier(0.18, 1.52, 0.4, 0.87);
+  transform: scale(1.25);
+  background: #eee;
+}
+
+.square:hover .letter {
+  color: #222;
 }
 
 .letter {

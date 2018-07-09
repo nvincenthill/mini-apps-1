@@ -109,12 +109,10 @@ let validateBoard = () => {
   let rows = validateRows();
   let diagonals = validateDiagonals();
   let isBoardFull = checkBoardForDraw();
-
-  if (isBoardFull) {
-    handleGameEnd("draw");
-  }
   if (columns || rows || diagonals) {
     handleGameEnd("win");
+  } else if (isBoardFull) {
+    handleGameEnd("draw");
   }
 };
 
