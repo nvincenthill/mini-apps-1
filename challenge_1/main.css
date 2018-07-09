@@ -56,18 +56,38 @@ body {
 button {
   font-family: Helvetica, sans-serif;
   font-size: 2rem;
-  line-height: 2rem;
+  height: 10vmax;
+  width: 30vmax;
+  line-height: 3rem;
   text-align: center;
-  padding: 1rem 1rem;
+  padding: 0.4rem 1rem 0rem 1rem;
   color: #eee;
   background: #222;
   font-weight: bold;
+  vertical-align: middle;
   border: none;
   transition: 0.5s ease-in-out;
-  margin: 0 auto;
+  margin: 3px 3px;
 }
 
-button:hover {
-  background: rgb(155, 155, 155);
+#start-button:hover {
+  background: green;
   transition: 0.15s ease-in-out;
+}
+
+#restart-button:hover {
+  background: red;
+  transition: 0.15s ease-in-out;
+}
+
+#restart-button {
+  display: none;
+}
+
+span {
+  cursor: default;
+}
+
+button:focus {
+  outline: 0;
 }
