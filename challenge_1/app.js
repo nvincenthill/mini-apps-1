@@ -1,12 +1,14 @@
 console.log("loading game...");
 
-// board state
+// board and game state
 let board = ["T", "I", "C", "T", "A", "C", "T", "O", "E"];
-
 let game = {
   isPlaying: false,
   firstPlayersTurn: true,
-  turn: 0
+  turn: 0,
+  playerOneName: "Player 1",
+  playerTwoName: "Player 2",
+  winner: ""
 };
 
 let startButton = document.getElementById("start-button");
@@ -66,7 +68,7 @@ let handleClick = i => {
         game.firstPlayersTurn = !game.firstPlayersTurn;
         board[i] = "O";
       }
-      validate();
+      validateBoard();
     }
   }
 };
@@ -101,6 +103,101 @@ let handleRestartButtonClick = () => {
   }
 };
 
-let validate = () => {
+let validateBoard = () => {
   console.log("validating board");
+  let columns = validateColumns();
+  let rows = validateRows();
+  let diagonals = validateDiagonals();
+  let isBoardFull = checkBoardForDraw();
+
+  if (isBoardFull) {
+    handleGameEnd("draw");
+  }
+  if (columns || rows || diagonals) {
+    handleGameEnd("win");
+  }
+};
+
+let validateColumns = () => {
+  let col1 = board[0] + board[3] + board[6];
+  let col2 = board[1] + board[4] + board[7];
+  let col3 = board[2] + board[5] + board[8];
+  let cols = [col1, col2, col3];
+  for (let i = 0; i < cols.length; i++) {
+    if (cols[i] === "XXX") {
+      game.winner = game.playerOneName;
+      return true;
+    }
+    if (cols[i] === "OOO") {
+      game.winner = game.playerTwoName;
+      return true;
+    }
+  }
+
+  return false;
+};
+
+let validateRows = () => {
+  let row1 = board[0] + board[1] + board[2];
+  let row2 = board[3] + board[4] + board[5];
+  let row3 = board[6] + board[7] + board[8];
+  let rows = [row1, row2, row3];
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i] === "XXX") {
+      game.winner = game.playerOneName;
+      return true;
+    }
+    if (rows[i] === "OOO") {
+      game.winner = game.playerTwoName;
+      return true;
+    }
+  }
+
+  return false;
+};
+
+let validateDiagonals = () => {
+  let diag1 = board[0] + board[4] + board[8];
+  let diag2 = board[2] + board[4] + board[6];
+
+  if (diag1 === "XXX") {
+    game.winner = game.playerOneName;
+    return true;
+  }
+  if (diag1 === "OOO") {
+    game.winner = game.playerTwoName;
+    return true;
+  }
+  if (diag2 === "XXX") {
+    game.winner = game.playerOneName;
+    return true;
+  }
+  if (diag2 === "OOO") {
+    game.winner = game.playerTwoName;
+    return true;
+  }
+  return false;
+};
+
+let checkBoardForDraw = () => {
+  let count = 0;
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] !== "") {
+      count++;
+    }
+  }
+  if (count === 9) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+let handleGameEnd = result => {
+  if (result === "draw") {
+    alert("The game is drawn");
+  }
+  if (result === "win") {
+    alert(`${game.winner} won the game!`);
+  }
 };
