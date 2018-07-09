@@ -6,19 +6,22 @@ body {
   background: #eee;
 }
 
-.title {
+#title {
   font-family: Helvetica, sans-serif;
   font-size: 3rem;
   text-align: center;
+  color: #222;
+  opacity: 0;
+  transition: 1s ease-in-out;
 }
 
 .gameboard {
-  margin-top: 15vmax;
+  margin-top: 5vmax;
   display: flex;
   flex-wrap: wrap;
   max-width: 30vmax;
   text-align: center;
-  align-content: center;
+  align-content: ce`nter;
   margin-left: auto;
   margin-right: auto;
 }
@@ -37,11 +40,13 @@ body {
   align-items: center;
   display: flex;
   transition: 0.5s ease-in-out;
+  z-index: 1;
 }
 
 .square:hover {
   transition: 1s cubic-bezier(0.18, 1.52, 0.4, 0.87);
   transform: scale(1.25);
+  z-index: 100;
   background: #eee;
 }
 
@@ -56,6 +61,7 @@ body {
   color: #eee;
   font-weight: bold;
   vertical-align: middle;
+  z-index: 1000;
 }
 
 button {

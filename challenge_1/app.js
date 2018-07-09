@@ -11,6 +11,12 @@ let game = {
   winner: ""
 };
 
+var playerOne = prompt("Player One - Please enter your name", "Player One");
+var playerTwo = prompt("Player One - Please enter your name", "Player Two");
+
+game.playerOneName = playerOne;
+game.playerTwoName = playerTwo;
+
 let startButton = document.getElementById("start-button");
 startButton.addEventListener("click", () => {
   handleStartButtonClick();
@@ -20,6 +26,8 @@ let restartButton = document.getElementById("restart-button");
 restartButton.addEventListener("click", () => {
   handleRestartButtonClick();
 });
+
+let title = document.getElementById("title");
 
 // TODO: refactor
 let square1 = document.getElementById(`square1`);
@@ -93,6 +101,7 @@ let handleRestartButtonClick = () => {
     console.log("restarting game...");
     let letter;
     for (let i = 1; i <= 9; i++) {
+      allSquares[i - 1].style.background = "";
       letter = document.getElementById(`letter${i}`);
       letter.innerHTML = "";
       board[i - 1] = "";
@@ -100,11 +109,11 @@ let handleRestartButtonClick = () => {
     game.isPlaying = false;
     startButton.style.display = "inline";
     restartButton.style.display = "none";
+    title.style.opacity = "0";
   }
 };
 
 let validateBoard = () => {
-  console.log("validating board");
   let columns = validateColumns();
   let rows = validateRows();
   let diagonals = validateDiagonals();
@@ -116,18 +125,28 @@ let validateBoard = () => {
   }
 };
 
+let styleWinningTiles = arr => {
+  console.log(arr);
+  allSquares[arr[0]].style.background = "green";
+  allSquares[arr[1]].style.background = "green";
+  allSquares[arr[2]].style.background = "green";
+};
+
 let validateColumns = () => {
   let col1 = board[0] + board[3] + board[6];
   let col2 = board[1] + board[4] + board[7];
   let col3 = board[2] + board[5] + board[8];
   let cols = [col1, col2, col3];
+  let tiles = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
   for (let i = 0; i < cols.length; i++) {
     if (cols[i] === "XXX") {
       game.winner = game.playerOneName;
+      styleWinningTiles(tiles[i]);
       return true;
     }
     if (cols[i] === "OOO") {
       game.winner = game.playerTwoName;
+      styleWinningTiles(tiles[i]);
       return true;
     }
   }
@@ -140,13 +159,16 @@ let validateRows = () => {
   let row2 = board[3] + board[4] + board[5];
   let row3 = board[6] + board[7] + board[8];
   let rows = [row1, row2, row3];
+  let tiles = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
   for (let i = 0; i < rows.length; i++) {
     if (rows[i] === "XXX") {
       game.winner = game.playerOneName;
+      styleWinningTiles(tiles[i]);
       return true;
     }
     if (rows[i] === "OOO") {
       game.winner = game.playerTwoName;
+      styleWinningTiles(tiles[i]);
       return true;
     }
   }
@@ -157,21 +179,25 @@ let validateRows = () => {
 let validateDiagonals = () => {
   let diag1 = board[0] + board[4] + board[8];
   let diag2 = board[2] + board[4] + board[6];
-
+  let tiles = [[0, 4, 8], [2, 4, 6]];
   if (diag1 === "XXX") {
     game.winner = game.playerOneName;
+    styleWinningTiles(tiles[0]);
     return true;
   }
   if (diag1 === "OOO") {
     game.winner = game.playerTwoName;
+    styleWinningTiles(tiles[0]);
     return true;
   }
   if (diag2 === "XXX") {
     game.winner = game.playerOneName;
+    styleWinningTiles(tiles[1]);
     return true;
   }
   if (diag2 === "OOO") {
     game.winner = game.playerTwoName;
+    styleWinningTiles(tiles[1]);
     return true;
   }
   return false;
@@ -193,9 +219,15 @@ let checkBoardForDraw = () => {
 
 let handleGameEnd = result => {
   if (result === "draw") {
-    alert("The game is drawn");
+    setTimeout(() => {
+      title.style.opacity = "1";
+      title.innerHTML = `The game was drawn`;
+    }, 750);
   }
   if (result === "win") {
-    alert(`${game.winner} won the game!`);
+    setTimeout(() => {
+      title.style.opacity = "1";
+      title.innerHTML = `${game.winner} won the game!`;
+    }, 750);
   }
 };
