@@ -48,7 +48,7 @@ body {
   transition: 0.5s ease-in-out;
   z-index: 1;
   outline: none;
-  box-shadow: 0 0 5px 1px #222;
+  box-shadow: 0 0 5px 1px #fff;
 }
 
 .square:hover {
