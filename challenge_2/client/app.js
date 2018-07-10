@@ -1,9 +1,11 @@
+let fileName = "filename.csv";
+
 $("#form").on("submit", function(e) {
   e.preventDefault();
   console.log("form submitted");
-  let fileName = cleanFileName(document.getElementById("file-input").value);
+  fileName = cleanFileName(document.getElementById("file-input").value);
   let jsonInput = document.getElementById("json-input").value;
-  handleSubmit(fileName, jsonInput);
+  handleSubmit(jsonInput);
 });
 
 let cleanFileName = name => {
@@ -18,10 +20,10 @@ let cleanFileName = name => {
   }
 };
 
-const handleSubmit = (fileName, json) => {
+const handleSubmit = json => {
   console.log("handling submission");
   postData(`http://localhost:3000`, json)
-    .then(data => console.log(data)) // JSON from `response.json()` call
+    .then(data => prepareCSV(data)) // JSON from `response.json()` call
     .catch(error => console.error(error));
 };
 
@@ -41,6 +43,28 @@ const postData = (url = ``, data = {}) => {
     referrer: "no-referrer", // no-referrer, *client
     body: JSON.stringify(data) // body data type must match "Content-Type" header
   })
-    .then(response => response.json()) // parses response to JSON
+    .then(response => {
+      // console.log(response.text());
+      return response.json();
+    }) // parses response to JSON
     .catch(error => console.error(`Fetch Error :\n`, error));
+};
+
+const prepareCSV = data => {
+  let csvContent = "data:text/csv;charset=utf-8,";
+  data.forEach(function(rowArray) {
+    let row = rowArray.join(",");
+    csvContent += row + "\r\n";
+  });
+  downloadCSV(csvContent);
+};
+
+const downloadCSV = csvContent => {
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", fileName);
+  // link.innerHTML = "Click Here to download";
+
+  link.click(); // This will download the data file named "my_data.csv".
 };
