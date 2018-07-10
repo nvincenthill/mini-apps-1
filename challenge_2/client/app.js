@@ -90,3 +90,45 @@ const arrayToTable = tableData => {
   });
   $("#table").append(table);
 };
+
+// handle drag and drop
+
+const dragenter = e => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+const dragover = e => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+const drop = e => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  var dt = e.dataTransfer;
+  var files = dt.files;
+
+  handleDrop(files);
+};
+
+handleDrop = files => {
+  var reader = new FileReader();
+  reader.readAsText(files[0]);
+  reader.onloadend = function(ev) {
+    console.log(ev.target.result);
+    let fileText = ev.target.result;
+    populateInputField(fileText);
+  };
+};
+
+populateInputField = str => {
+  $("#json-input").val(str);
+  // $("#file-input").val("");
+};
+
+let dropbox = document.getElementById("form-container");
+dropbox.addEventListener("dragenter", dragenter, false);
+dropbox.addEventListener("dragover", dragover, false);
+dropbox.addEventListener("drop", drop, false);

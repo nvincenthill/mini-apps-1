@@ -97,6 +97,8 @@ td {
 }
 
 th {
+  text-transform: capitalize;
   margin-right: 2rem;
+  font-size: 1.25rem;
   /* border-bottom: 2px solid #eee; */
 }
