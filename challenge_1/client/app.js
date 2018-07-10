@@ -79,9 +79,9 @@ let handleClick = i => {
         game.firstPlayersTurn = !game.firstPlayersTurn;
         board[i] = "×";
       } else {
-        allLetters[i].innerHTML = "◯";
+        allLetters[i].innerHTML = "o";
         game.firstPlayersTurn = !game.firstPlayersTurn;
-        board[i] = "◯";
+        board[i] = "o";
       }
       validateBoard();
       if (game.isInsane) {
@@ -154,7 +154,7 @@ let validateColumns = () => {
       styleWinningTiles(tiles[i]);
       return true;
     }
-    if (cols[i] === "◯◯◯") {
+    if (cols[i] === "ooo") {
       game.winner = game.playerTwoName;
       styleWinningTiles(tiles[i]);
       return true;
@@ -176,7 +176,7 @@ let validateRows = () => {
       styleWinningTiles(tiles[i]);
       return true;
     }
-    if (rows[i] === "◯◯◯") {
+    if (rows[i] === "ooo") {
       game.winner = game.playerTwoName;
       styleWinningTiles(tiles[i]);
       return true;
@@ -195,7 +195,7 @@ let validateDiagonals = () => {
     styleWinningTiles(tiles[0]);
     return true;
   }
-  if (diag1 === "◯◯◯") {
+  if (diag1 === "ooo") {
     game.winner = game.playerTwoName;
     styleWinningTiles(tiles[0]);
     return true;
@@ -205,7 +205,7 @@ let validateDiagonals = () => {
     styleWinningTiles(tiles[1]);
     return true;
   }
-  if (diag2 === "◯◯◯") {
+  if (diag2 === "ooo") {
     game.winner = game.playerTwoName;
     styleWinningTiles(tiles[1]);
     return true;
@@ -232,14 +232,14 @@ let handleGameEnd = result => {
   if (result === "draw") {
     setTimeout(() => {
       title.style.opacity = "1";
-      restartButton.style.maxHeight = "5vmax";
+      restartButton.style.maxHeight = "10vmax";
       title.innerHTML = `The game was drawn`;
     }, 750);
   }
   if (result === "win") {
     setTimeout(() => {
       title.style.opacity = "1";
-      restartButton.style.maxHeight = "5vmax";
+      restartButton.style.maxHeight = "10vmax";
       title.innerHTML = `${game.winner} wins!`;
     }, 750);
   }

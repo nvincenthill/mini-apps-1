@@ -39,7 +39,7 @@ body {
 
 .square {
   background: #222;
-  border: 3px solid #eee;
+  /* border: 3px solid #eee; */
   min-height: 10vmax;
   min-width: 10vmax;
   justify-content: center;
@@ -47,6 +47,8 @@ body {
   display: flex;
   transition: 0.5s ease-in-out;
   z-index: 1;
+  outline: none;
+  box-shadow: 0 0 5px 1px #222;
 }
 
 .square:hover {
@@ -84,7 +86,6 @@ button {
   vertical-align: middle;
   border: none;
   transition: 0.5s ease-in-out;
-  margin: 3px 3px;
 }
 
 #start-button:hover {
@@ -101,7 +102,7 @@ button {
 #restart-button:hover {
   background: red;
   transition: 1s ease-in-out;
-  max-height: 5vmax;
+  max-height: 10vmax;
 }
 
 #restart-button {
