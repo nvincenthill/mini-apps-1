@@ -15,13 +15,19 @@ body {
   transition: 1s ease-in-out;
 }
 
-.gameboard {
-  margin-top: 5vmax;
+#gameboard {
   display: flex;
   flex-wrap: wrap;
   max-width: 30vmax;
   text-align: center;
   align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  transition: 1s cubic-bezier(0.18, 1.52, 0.4, 0.87);
+}
+
+#button-container {
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
@@ -45,7 +51,7 @@ body {
 
 .square:hover {
   transition: 1s cubic-bezier(0.18, 1.52, 0.4, 0.87);
-  transform: scale(1.25);
+  /* transform: scale(1.15); */
   z-index: 100;
   background: #eee;
 }
@@ -57,7 +63,7 @@ body {
 .letter {
   font-family: Helvetica, sans-serif;
   max-width: 50%;
-  font-size: 2rem;
+  font-size: 3.5rem;
   color: #eee;
   font-weight: bold;
   vertical-align: middle;
@@ -66,7 +72,7 @@ body {
 
 button {
   font-family: Helvetica, sans-serif;
-  font-size: 2rem;
+  font-size: 3rem;
   height: 10vmax;
   width: 30vmax;
   line-height: 3rem;
@@ -82,17 +88,26 @@ button {
 }
 
 #start-button:hover {
+  transform: scale(1.15) translateY(2vmax);
+  transition: 0.5s cubic-bezier(0.18, 1.52, 0.4, 0.87);
+}
+
+#start-button {
   background: green;
-  transition: 0.15s ease-in-out;
+  z-index: 2000;
+  transition: 0.25 ease-in-out;
 }
 
 #restart-button:hover {
   background: red;
-  transition: 0.15s ease-in-out;
+  transition: 1s ease-in-out;
+  max-height: 5vmax;
 }
 
 #restart-button {
   display: none;
+  max-height: 6px;
+  transition: 1s ease-in-out;
 }
 
 span {

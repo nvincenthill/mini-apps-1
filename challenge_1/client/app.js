@@ -8,14 +8,20 @@ let game = {
   turn: 0,
   playerOneName: "Player 1",
   playerTwoName: "Player 2",
-  winner: ""
+  winner: "",
+  isInsane: false,
+  currentRotation: 0
 };
 
 var playerOne = prompt("Player One - Please enter your name", "Player One");
 var playerTwo = prompt("Player One - Please enter your name", "Player Two");
+var isInsane = prompt("Insane mode? (Yes/No)", "Yes");
 
 game.playerOneName = playerOne;
 game.playerTwoName = playerTwo;
+if (isInsane === "Yes" || isInsane === "yes") {
+  game.isInsane = true;
+}
 
 let startButton = document.getElementById("start-button");
 startButton.addEventListener("click", () => {
@@ -28,6 +34,7 @@ restartButton.addEventListener("click", () => {
 });
 
 let title = document.getElementById("title");
+let gameboard = document.getElementById("gameboard");
 
 // TODO: refactor
 let square1 = document.getElementById(`square1`);
@@ -68,15 +75,19 @@ let handleClick = i => {
   if (game.isPlaying) {
     if (allLetters[i].innerHTML === "") {
       if (game.firstPlayersTurn) {
-        allLetters[i].innerHTML = "X";
+        allLetters[i].innerHTML = "×";
         game.firstPlayersTurn = !game.firstPlayersTurn;
-        board[i] = "X";
+        board[i] = "×";
       } else {
-        allLetters[i].innerHTML = "O";
+        allLetters[i].innerHTML = "◯";
         game.firstPlayersTurn = !game.firstPlayersTurn;
-        board[i] = "O";
+        board[i] = "◯";
       }
       validateBoard();
+      if (game.isInsane) {
+        game.currentRotation += 90;
+        gameboard.style.transform = `rotate(${game.currentRotation}deg)`;
+      }
     }
   }
 };
@@ -92,25 +103,24 @@ let handleStartButtonClick = () => {
     }
     game.isPlaying = true;
     startButton.style.display = "none";
+    restartButton.style.maxHeight = "";
     restartButton.style.display = "inline";
   }
 };
 
 let handleRestartButtonClick = () => {
-  if (game.isPlaying === true) {
-    console.log("restarting game...");
-    let letter;
-    for (let i = 1; i <= 9; i++) {
-      allSquares[i - 1].style.background = "";
-      letter = document.getElementById(`letter${i}`);
-      letter.innerHTML = "";
-      board[i - 1] = "";
-    }
-    game.isPlaying = false;
-    startButton.style.display = "inline";
-    restartButton.style.display = "none";
-    title.style.opacity = "0";
+  console.log("restarting game...");
+  let letter;
+  for (let i = 1; i <= 9; i++) {
+    allSquares[i - 1].style.background = "";
+    letter = document.getElementById(`letter${i}`);
+    letter.innerHTML = "";
+    board[i - 1] = "";
   }
+  game.isPlaying = false;
+  startButton.style.display = "inline";
+  restartButton.style.display = "none";
+  title.style.opacity = "0";
 };
 
 let validateBoard = () => {
@@ -139,12 +149,12 @@ let validateColumns = () => {
   let cols = [col1, col2, col3];
   let tiles = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
   for (let i = 0; i < cols.length; i++) {
-    if (cols[i] === "XXX") {
+    if (cols[i] === "×××") {
       game.winner = game.playerOneName;
       styleWinningTiles(tiles[i]);
       return true;
     }
-    if (cols[i] === "OOO") {
+    if (cols[i] === "◯◯◯") {
       game.winner = game.playerTwoName;
       styleWinningTiles(tiles[i]);
       return true;
@@ -161,12 +171,12 @@ let validateRows = () => {
   let rows = [row1, row2, row3];
   let tiles = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
   for (let i = 0; i < rows.length; i++) {
-    if (rows[i] === "XXX") {
+    if (rows[i] === "×××") {
       game.winner = game.playerOneName;
       styleWinningTiles(tiles[i]);
       return true;
     }
-    if (rows[i] === "OOO") {
+    if (rows[i] === "◯◯◯") {
       game.winner = game.playerTwoName;
       styleWinningTiles(tiles[i]);
       return true;
@@ -180,22 +190,22 @@ let validateDiagonals = () => {
   let diag1 = board[0] + board[4] + board[8];
   let diag2 = board[2] + board[4] + board[6];
   let tiles = [[0, 4, 8], [2, 4, 6]];
-  if (diag1 === "XXX") {
+  if (diag1 === "×××") {
     game.winner = game.playerOneName;
     styleWinningTiles(tiles[0]);
     return true;
   }
-  if (diag1 === "OOO") {
+  if (diag1 === "◯◯◯") {
     game.winner = game.playerTwoName;
     styleWinningTiles(tiles[0]);
     return true;
   }
-  if (diag2 === "XXX") {
+  if (diag2 === "×××") {
     game.winner = game.playerOneName;
     styleWinningTiles(tiles[1]);
     return true;
   }
-  if (diag2 === "OOO") {
+  if (diag2 === "◯◯◯") {
     game.winner = game.playerTwoName;
     styleWinningTiles(tiles[1]);
     return true;
@@ -218,16 +228,19 @@ let checkBoardForDraw = () => {
 };
 
 let handleGameEnd = result => {
+  game.isPlaying = false;
   if (result === "draw") {
     setTimeout(() => {
       title.style.opacity = "1";
+      restartButton.style.maxHeight = "5vmax";
       title.innerHTML = `The game was drawn`;
     }, 750);
   }
   if (result === "win") {
     setTimeout(() => {
       title.style.opacity = "1";
-      title.innerHTML = `${game.winner} won the game!`;
+      restartButton.style.maxHeight = "5vmax";
+      title.innerHTML = `${game.winner} wins!`;
     }, 750);
   }
 };
