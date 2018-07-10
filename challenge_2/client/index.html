@@ -10,7 +10,17 @@
 </head>
 
 <body>
-    <h1>JSON to CSV Generator</h1>
+    <h1 id="title">JSON to CSV Generator</h1>
+
+    <div class="form-container">
+        <form action="/action_page.php" id="usrform">
+            <input id='file-input' type="text" name="usrname" placeholder="filename.csv">
+            <textarea id='json-input' rows="4" cols="50" name="comment" form="usrform" placeholder="Enter JSON here"></textarea>
+            <br>
+            <input id='submit' type="submit">
+        </form>
+    </div>
 </body>
+<script src="app.js"></script>
 
 </html>

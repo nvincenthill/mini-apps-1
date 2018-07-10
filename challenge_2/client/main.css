@@ -1,9 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: #222;
   color: #eee;
   text-align: center;
+  font-family: Helvetica, sans-serif;
 }
 
 h1 {
   margin: 2rem 2rem;
+  font-family: Helvetica, sans-serif;
+}
+
+textarea {
+  text-align: center;
+  /* margin-top: 1rem; */
+  padding: 1rem;
+  font-size: 1.5rem;
+  border: none;
+}
+
+input {
+  padding: 1rem;
+  font-size: 2rem;
+  border: none;
+}
+
+#title {
+  font-size: 4rem;
+}
+
+p {
+  font-size: 2rem;
+}
+
+#json-input {
+  width: 75vmin;
+  margin-bottom: 0;
+  font-size: 2rem;
+  font-family: Helvetica, sans-serif;
+}
+
+#file-input {
+  width: 100%;
+  margin-right: 0;
+  font-size: 2rem;
+  font-family: Helvetica, sans-serif;
+}
+
+#submit {
+  width: 100%;
+  border: none;
+  margin-top: 0;
+  font-size: 2rem;
+  font-family: Helvetica, sans-serif;
+}
+
+.form-container {
+  margin: 0 auto;
+  width: 75vmin;
 }
