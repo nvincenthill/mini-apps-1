@@ -1,5 +1,7 @@
 console.log("loading game...");
 
+//TODO: Add unit tests, add "gravity mode"
+
 // board and game state
 let board = ["T", "I", "C", "T", "A", "C", "T", "O", "E"];
 let game = {
@@ -36,7 +38,7 @@ restartButton.addEventListener("click", () => {
 let title = document.getElementById("title");
 let gameboard = document.getElementById("gameboard");
 
-// TODO: refactor
+// TODO: refactor this code
 let square1 = document.getElementById(`square1`);
 let square2 = document.getElementById(`square2`);
 let square3 = document.getElementById(`square3`);
