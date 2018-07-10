@@ -1,4 +1,5 @@
 let fileName = "filename.csv";
+let isDraggingOver = false;
 
 $("#form").on("submit", function(e) {
   e.preventDefault();
@@ -96,6 +97,29 @@ const arrayToTable = tableData => {
 const dragenter = e => {
   e.stopPropagation();
   e.preventDefault();
+  $("#json-input").css("background", "#eee");
+  // $(document).mousemove(function(event) {
+  //   windowWidth = $(window).width();
+  //   windowHeight = $(window).height();
+
+  //   mouseXpercentage = Math.round((event.pageX / windowWidth) * 100);
+  //   mouseYpercentage = Math.round((event.pageY / windowHeight) * 100);
+
+  //   $("#json-input").css(
+  //     "background",
+  //     "radial-gradient(at " +
+  //       mouseXpercentage +
+  //       "% " +
+  //       mouseYpercentage +
+  //       "%, green, #222)"
+  //   );
+  // });
+};
+
+const dragleave = e => {
+  e.stopPropagation();
+  e.preventDefault();
+  $("#json-input").css("background", "");
 };
 
 const dragover = e => {
@@ -110,6 +134,7 @@ const drop = e => {
   var dt = e.dataTransfer;
   var files = dt.files;
 
+  $("#json-input").css("background", "");
   handleDrop(files);
 };
 
@@ -128,7 +153,8 @@ populateInputField = str => {
   // $("#file-input").val("");
 };
 
-let dropbox = document.getElementById("form-container");
+let dropbox = document.getElementById("json-input");
 dropbox.addEventListener("dragenter", dragenter, false);
+dropbox.addEventListener("dragleave", dragleave, false);
 dropbox.addEventListener("dragover", dragover, false);
 dropbox.addEventListener("drop", drop, false);
