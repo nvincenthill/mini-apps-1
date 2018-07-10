@@ -52,6 +52,7 @@ const postData = (url = ``, data = {}) => {
 };
 
 const prepareCSV = data => {
+  arrayToTable(data);
   let csvContent = "data:text/csv;charset=utf-8,";
   data.forEach(function(rowArray) {
     let row = rowArray.join(",");
@@ -68,4 +69,21 @@ const downloadCSV = csvContent => {
   // link.innerHTML = "Click Here to download";
 
   link.click(); // This will download the data file named "my_data.csv".
+};
+
+const arrayToTable = tableData => {
+  console.log(tableData);
+  var table = $("<table></table>");
+  $(tableData).each(function(i, rowData) {
+    let row = $("<tr></tr>");
+    $(rowData).each(function(j, cellData) {
+      if (i === 0) {
+        row.append($("<th align='left'>" + cellData + "</th>"));
+      } else {
+        row.append($("<td align='left'>" + cellData + "</td>"));
+      }
+    });
+    table.append(row);
+  });
+  $("#table").append(table);
 };

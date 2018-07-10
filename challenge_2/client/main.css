@@ -38,23 +38,30 @@ p {
 
 #json-input {
   width: 75vmin;
-  height: 75vmin;
+  height: 50vmin;
   margin-bottom: 0;
   font-size: 1rem;
+  background: #222;
+  color: #eee;
   font-family: Helvetica, sans-serif;
 }
 
 #file-input {
   width: 100%;
   margin-right: 0;
-  font-size: 1rem;
+  font-size: 2rem;
   font-family: Helvetica, sans-serif;
+  margin-bottom: 5px;
+  background: #222;
+  color: #eee;
+  font-weight: bold;
 }
 
 #submit {
   width: 100%;
   border: none;
   margin-top: 0;
+  background: green;
   font-size: 1rem;
   font-family: Helvetica, sans-serif;
 }
@@ -62,4 +69,29 @@ p {
 .form-container {
   margin: 0 auto;
   width: 75vmin;
+}
+
+#table {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+table {
+  margin: 0 auto;
+  width: 100vmin;
+}
+
+tr {
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+}
+
+td {
+  margin-right: 2rem;
+  padding: 0.25rem;
+}
+
+th {
+  margin-right: 2rem;
+  /* border-bottom: 2px solid #eee; */
 }
