@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link href="main.css" rel="stylesheet">
     <title>JSON to CSV Generator</title>
 </head>
@@ -13,9 +14,9 @@
     <h1 id="title">JSON to CSV Generator</h1>
 
     <div class="form-container">
-        <form action="/action_page.php" id="usrform">
-            <input id='file-input' type="text" name="usrname" placeholder="filename.csv">
-            <textarea id='json-input' rows="4" cols="50" name="comment" form="usrform" placeholder="Enter JSON here"></textarea>
+        <form id='form' action="/action_page.php" id="usrform">
+            <input id='file-input' type="text" name="usrname" value="filename.csv">
+            <textarea id='json-input' rows="4" cols="50" name="comment" form="usrform" placeholder="Enter JSON here">{ "name":"Nick", "age":25, "codingSkill":"moderate" }</textarea>
             <br>
             <input id='submit' type="submit">
         </form>

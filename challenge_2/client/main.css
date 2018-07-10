@@ -18,13 +18,13 @@ textarea {
   text-align: center;
   /* margin-top: 1rem; */
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   border: none;
 }
 
 input {
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 1rem;
   border: none;
 }
 
@@ -33,20 +33,20 @@ input {
 }
 
 p {
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 #json-input {
   width: 75vmin;
   margin-bottom: 0;
-  font-size: 2rem;
+  font-size: 1rem;
   font-family: Helvetica, sans-serif;
 }
 
 #file-input {
   width: 100%;
   margin-right: 0;
-  font-size: 2rem;
+  font-size: 1rem;
   font-family: Helvetica, sans-serif;
 }
 
@@ -54,7 +54,7 @@ p {
   width: 100%;
   border: none;
   margin-top: 0;
-  font-size: 2rem;
+  font-size: 1rem;
   font-family: Helvetica, sans-serif;
 }
 
