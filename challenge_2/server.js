@@ -1,28 +1,53 @@
 const express = require("express");
 const app = express();
+var parser = require("body-parser");
 
 app.get("/get", (req, res) => res.send("Hello World!"));
 
 app.listen(3000, () => console.log("JSON to CSV listening on port 3000!"));
 
+app.use(parser.json());
+
 app.use(express.static("client"));
 
 app.post("/", function(req, res) {
-  console.log(req);
-  let unconvertedData = { hello: "world" };
+  console.log("Handling a POST request");
+  let unconvertedData = req.body;
   let dataToSend = convertJsonToCsv(unconvertedData);
   res.send(dataToSend);
 });
 
+let createFirstRow = dataToConvert => {
+  let keys = Object.keys(dataToConvert);
+  let firstRow = [];
+  for (let i = 0; i < keys.length - 1; i++) {
+    firstRow.push(keys[i]);
+  }
+  let convertedData = [firstRow];
+  return convertedData;
+};
+
 let convertJsonToCsv = dataToConvert => {
-  // turn dataToConvert into convertedData
+  let convertedData = createFirstRow(dataToConvert);
+  let convertData = obj => {
+    let temp = [];
+    let keys = Object.keys(obj);
+    for (let i = 0; i < keys.length - 1; i++) {
+      temp.push(obj[keys[i]]);
+    }
+    convertedData.push(temp);
 
-  let convertedData;
-  convertedData = [
-    ["name1", "city1", "some other info"],
-    ["name2", "city2", "more info"]
-  ];
+    // base case
+    if (obj["children"].length === 0) {
+      return convertedData;
+    }
 
+    //recursively call on all children
+    for (let i = 0; i < obj.children.length; i++) {
+      convertData(obj.children[i]);
+    }
+  };
+  convertData(dataToConvert);
   return convertedData;
 };
 

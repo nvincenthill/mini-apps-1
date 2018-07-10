@@ -5,6 +5,7 @@ $("#form").on("submit", function(e) {
   console.log("form submitted");
   fileName = cleanFileName(document.getElementById("file-input").value);
   let jsonInput = document.getElementById("json-input").value;
+  console.log(JSON.parse(jsonInput));
   handleSubmit(jsonInput);
 });
 
@@ -41,7 +42,7 @@ const postData = (url = ``, data = {}) => {
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer", // no-referrer, *client
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
+    body: data // body data type must match "Content-Type" header
   })
     .then(response => {
       // console.log(response.text());
