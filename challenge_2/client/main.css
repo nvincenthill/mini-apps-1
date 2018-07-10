@@ -72,8 +72,13 @@ p {
 }
 
 #table {
-  margin-top: 1rem;
+  border: 0.5rem solid #eee;
+  padding: 2rem;
+  margin-top: 2rem;
   text-align: center;
+  margin-left: 10vmin;
+  margin-right: 10vmin;
+  display: none;
 }
 
 table {

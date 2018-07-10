@@ -20,6 +20,8 @@ app.post("/", function(req, res) {
 let createFirstRow = dataToConvert => {
   let keys = Object.keys(dataToConvert);
   let firstRow = [];
+  // add a primary key field
+  firstRow.push("id");
   for (let i = 0; i < keys.length - 1; i++) {
     firstRow.push(keys[i]);
   }
@@ -29,9 +31,12 @@ let createFirstRow = dataToConvert => {
 
 let convertJsonToCsv = dataToConvert => {
   let convertedData = createFirstRow(dataToConvert);
+  let key = 0;
   let convertData = obj => {
     let temp = [];
     let keys = Object.keys(obj);
+    temp.push(key);
+    key++;
     for (let i = 0; i < keys.length - 1; i++) {
       temp.push(obj[keys[i]]);
     }

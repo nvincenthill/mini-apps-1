@@ -26,6 +26,9 @@ const handleSubmit = json => {
   postData(`http://localhost:3000`, json)
     .then(data => prepareCSV(data)) // JSON from `response.json()` call
     .catch(error => console.error(error));
+  $("#json-input").val("");
+  $("#file-input").val("");
+  $("#table").css("display", "inline-block");
 };
 
 const postData = (url = ``, data = {}) => {
