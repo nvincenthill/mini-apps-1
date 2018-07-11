@@ -1,4 +1,28 @@
 body {
-  background: #222;
-  color: #eee;
+  --main-bg-color: #222;
+  --main-font-color: #eee;
+  background: var(--main-bg-color);
+  color: var(--main-font-color);
+}
+
+.app {
+  text-align: center;
+  padding: 2rem;
+}
+
+#checkout-button {
+  padding: 0 2rem;
+  width: 50vmin;
+  height: 25vmin;
+  font-size: 5rem;
+  margin-top: 25vmin;
+  font-weight: bold;
+  background: var(--main-bg-color);
+  color: var(--main-font-color);
+  outline: 1rem solid var(--main-font-color);
+}
+
+#checkout-button:hover {
+  transform: scale(1.25);
+  transition: 0.05s ease-out;
 }
