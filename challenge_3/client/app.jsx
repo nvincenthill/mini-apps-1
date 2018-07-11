@@ -26,7 +26,8 @@ class App extends React.Component {
     this.setState({ formDisplayed: form + 1 });
 
     // save data to server/db
-    this.postData(this.state);
+    //TODO: Add node ENV variables
+    this.postData(`http://localhost:3000`, this.state);
   }
 
   beginCheckout() {
