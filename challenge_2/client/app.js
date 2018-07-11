@@ -1,5 +1,4 @@
 let fileName = "filename.csv";
-let isDraggingOver = false;
 
 $("#form").on("submit", function(e) {
   e.preventDefault();

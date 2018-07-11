@@ -3,6 +3,8 @@
 // TODO: Allow the children property to be optional
 // TODO: Add a field to the CSV report that specifies the ID of the parent record
 // TODO: Add a form field that allows the user to enter a string, which, when present will filter (remove from the CSV report) any records that contain that string
+// TODO: Add MongoDB for data persistance
+// TODO: Add table of all conversions run
 
 const express = require("express");
 const app = express();
