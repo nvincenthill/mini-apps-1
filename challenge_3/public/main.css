@@ -1,28 +1,81 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   --main-bg-color: #222;
   --main-font-color: #eee;
   background: var(--main-bg-color);
   color: var(--main-font-color);
+  font-family: Helvetica, sans-serif;
 }
 
 .app {
   text-align: center;
-  padding: 2rem;
+  padding: 4rem;
 }
 
 #checkout-button {
   padding: 0 2rem;
-  width: 50vmin;
+  width: 75vmin;
   height: 25vmin;
   font-size: 5rem;
   margin-top: 25vmin;
-  font-weight: bold;
-  background: var(--main-bg-color);
-  color: var(--main-font-color);
-  outline: 1rem solid var(--main-font-color);
 }
 
-#checkout-button:hover {
+.form {
+  outline: 1rem solid var(--main-font-color);
+  max-width: 75vmin;
+  /* height: 50vmin; */
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Helvetica, sans-serif;
+}
+
+div {
+  font-size: 2rem;
+  font-family: Helvetica, sans-serif;
+}
+
+p {
+  font-family: Helvetica, sans-serif;
+  margin: 0;
+}
+
+button {
+  font-weight: bold;
+  background: transparent;
+  color: var(--main-font-color);
+  outline: 1rem solid var(--main-font-color);
+  border: none;
+  transition: 0.25 ease-out;
+}
+
+button:hover {
   transform: scale(1.25);
-  transition: 0.05s ease-out;
+  transition: 0.25s cubic-bezier(0.81, 1.78, 0, 0.76);
+  border: none;
+}
+
+input {
+  margin: 1rem auto 1.5rem auto;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 2rem;
+}
+
+.form-title {
+  font-size: 2rem;
+}
+
+#next-button {
+  margin-top: 2rem;
+  outline: none;
+  font-size: 3rem;
+}
+
+#purchase-button {
+  margin-top: 2rem;
+  outline: none;
+  font-size: 3rem;
 }
