@@ -97,22 +97,6 @@ const dragenter = e => {
   e.stopPropagation();
   e.preventDefault();
   $("#json-input").css("background", "#eee");
-  // $(document).mousemove(function(event) {
-  //   windowWidth = $(window).width();
-  //   windowHeight = $(window).height();
-
-  //   mouseXpercentage = Math.round((event.pageX / windowWidth) * 100);
-  //   mouseYpercentage = Math.round((event.pageY / windowHeight) * 100);
-
-  //   $("#json-input").css(
-  //     "background",
-  //     "radial-gradient(at " +
-  //       mouseXpercentage +
-  //       "% " +
-  //       mouseYpercentage +
-  //       "%, green, #222)"
-  //   );
-  // });
 };
 
 const dragleave = e => {
@@ -157,3 +141,20 @@ dropbox.addEventListener("dragenter", dragenter, false);
 dropbox.addEventListener("dragleave", dragleave, false);
 dropbox.addEventListener("dragover", dragover, false);
 dropbox.addEventListener("drop", drop, false);
+
+$(document).mousemove(function(event) {
+  windowWidth = $(window).width();
+  windowHeight = $(window).height();
+
+  mouseXpercentage = Math.round((event.pageX / windowWidth) * 100);
+  mouseYpercentage = Math.round((event.pageY / windowHeight) * 100);
+
+  $("#table").css(
+    "background",
+    "radial-gradient(at " +
+      mouseXpercentage +
+      "% " +
+      mouseYpercentage +
+      "%, #7b4397, #dc2430)"
+  );
+});

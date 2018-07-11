@@ -2,22 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link href="main.css" rel="stylesheet">
-    <title>JSON to CSV Generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link href="main.css" rel="stylesheet">
+  <title>JSON to CSV Generator</title>
 </head>
 
 <body>
-    <h1 id="title">JSON to CSV Converter</h1>
-    <h2>With drag-and-drop functionality!</h2>
+  <h1 id="title">JSON to CSV Converter</h1>
+  <h2>With drag-and-drop functionality!</h2>
 
-    <div id="form-container" class="form-container">
-        <form id='form' action="/action_page.php" id="usrform">
-            <input id='file-input' type="text" name="usrname" placeholder="Enter file name here" value="filename.csv">
-            <textarea id='json-input' rows="4" cols="50" name="comment" form="usrform" placeholder="Enter JSON here">{
+  <div id="form-container" class="form-container">
+    <form id='form' action="/action_page.php" id="usrform">
+      <input id='file-input' type="text" name="usrname" placeholder="Enter file name here" value="filename.csv">
+      <textarea id='json-input' rows="4" cols="50" name="comment" form="usrform" placeholder="Drop JSON here">{
                 "firstName": "Joshie",
                 "lastName": "Wyattson",
                 "county": "San Mateo",
@@ -64,11 +64,11 @@
                   }
                 ]
               }</textarea>
-            <br>
-            <input id='submit' type="submit">
-        </form>
-    </div>
-    <div id="table"></div>
+      <br>
+      <input id='submit' type="submit">
+    </form>
+  </div>
+  <div id="table"></div>
 </body>
 <script src="app.js"></script>
 

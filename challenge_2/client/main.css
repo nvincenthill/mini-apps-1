@@ -47,6 +47,10 @@ p {
   text-shadow: 1px 1px 1px #222;
 }
 
+#json-input:focus {
+  outline: none;
+}
+
 #file-input {
   width: 100%;
   margin-right: 0;
@@ -56,6 +60,10 @@ p {
   background: #222;
   color: #eee;
   font-weight: bold;
+}
+
+#file-input:focus {
+  outline: none;
 }
 
 #submit {
@@ -75,6 +83,10 @@ p {
   transition: 0.25s ease-in-out;
   transform: scale(1.5) translateY(0.5vmin);
   opacity: 1;
+}
+
+#submit:focus {
+  outline: none;
 }
 
 .form-container {
@@ -100,11 +112,17 @@ table {
 tr {
   margin-bottom: 0.5rem;
   padding: 1rem;
+  transition: 0.25s ease-in;
+}
+
+tr:hover {
+  color: #222;
 }
 
 td {
   margin-right: 2rem;
   padding: 0.25rem;
+  text-shadow: 1px 1px 1px #222;
 }
 
 th {
