@@ -141,26 +141,26 @@ class FormOne extends React.Component {
           <p className="form-subtitle">Name</p>
           <input
             type="text"
-            id="myinput"
             placeholder="Micky"
             value={this.props.name}
             onChange={e => this.props.handleInput(e, "name")}
+            autoComplete="name"
           />
           <p className="form-subtitle">Email</p>
           <input
             type="text"
-            id="myinput"
             placeholder="mouse@gmail.com"
             value={this.props.email}
             onChange={e => this.props.handleInput(e, "email")}
+            autoComplete="email"
           />
           <p className="form-subtitle">Password</p>
           <input
-            type="text"
-            id="myinput"
+            type="password"
             placeholder="ilikecheese"
             value={this.props.password}
             onChange={e => this.props.handleInput(e, "password")}
+            autoComplete="password"
           />
         </div>
       </div>

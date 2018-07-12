@@ -19,7 +19,8 @@ body {
   padding: 0 2rem;
   width: 75vmin;
   height: 25vmin;
-  font-size: 5rem;
+  font-size: 4rem;
+  line-height: 4.5rem;
   margin-top: 25vmin;
 }
 
@@ -49,6 +50,7 @@ button {
   outline: 1rem solid var(--main-font-color);
   border: none;
   transition: 0.25 ease-out;
+  cursor: pointer;
 }
 
 button:hover {
