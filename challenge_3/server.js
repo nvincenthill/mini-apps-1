@@ -59,7 +59,7 @@ let commitToDB = data => {
             if (err) {
               throw err;
             }
-            console.log("This collection contains " + count + " documents.");
+            console.log("This collection contains " + count + " document(s).");
           });
 
           // Close the db connection when we're done with it:
