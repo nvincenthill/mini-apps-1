@@ -1,6 +1,7 @@
 const express = require("express");
 const parser = require("body-parser");
 const app = express();
+const base = require("mongodb");
 
 // app.get("/get", (req, res) => res.send("Hello World!"));
 
@@ -27,3 +28,7 @@ app.post("/", function(req, res) {
 
   res.send(req.body);
 });
+
+let commitToDB = () => {
+  console.log("committing to mongoDB");
+};

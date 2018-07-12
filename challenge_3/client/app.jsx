@@ -52,7 +52,7 @@ class App extends React.Component {
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       credentials: "same-origin", // include, same-origin, *omit
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json"
         // "Content-Type": "application/x-www-form-urlencoded",
       },
       redirect: "follow", // manual, *follow, error
@@ -177,7 +177,7 @@ class FormTwo extends React.Component {
           <input
             type="text"
             id="myinput"
-            placeholder="Corvaliis"
+            placeholder="Corvallis"
             value={this.props.city}
             onChange={e => this.props.handleInput(e, "city")}
           />
