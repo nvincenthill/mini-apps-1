@@ -28,7 +28,7 @@ body {
   max-width: 75vmin;
   /* height: 50vmin; */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
   font-family: Helvetica, sans-serif;
 }
 
@@ -72,6 +72,34 @@ input {
   margin-top: 2rem;
   outline: none;
   font-size: 3rem;
+  color: var(--main-font-color);
+  transition: 0.25 ease-out;
+}
+
+#next-button:hover {
+  color: green;
+  transition: 0.25 ease-in;
+}
+
+#back-button {
+  margin-top: 2rem;
+  outline: none;
+  font-size: 3rem;
+  color: var(--main-font-color);
+  transition: 0.25 ease-out;
+}
+
+#back-button:hover {
+  color: red;
+  transition: 0.25 ease-in;
+}
+
+#blank-button {
+  margin-top: 2rem;
+  outline: none;
+  font-size: 3rem;
+  color: var(--main-bg-color);
+  cursor: default;
 }
 
 #purchase-button {

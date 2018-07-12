@@ -1,16 +1,11 @@
-// TODO
-
+// TODO: Validation
 // Don't allow the user to proceed until all the required fields are filled in. Address line 2 should be optional. Be sure to display appropriate error messages to the user, so they know why they are not allowed to proceed.
-
 // Validate the form fields. Don't allow the user to proceed to the next step and do not save the data until the fields are valid. Validation means that you must prevent the user from entering haha as the email address -- the email address have a valid data-shape. You'll have to decide which fields deserve validation and which do not. Be sure to display appropriate error messages to the user, so they know why they are not allowed to proceed.
 
+// TODO: Add local storage
 // If the window is closed and reopened, the checkout process should continue at the same step the user was on when the window was closed (it's ok if the fields on the "current" step are blank when the window is reopened). The app should continue to put the remaining data into the same record it was using before the window was closed. Once Purchase is clicked, it should not be possible to continue.
 
-// Allow the user to move back and forward through the checkout process.
-
-// When the user reaches the confirmation page, let the user edit any prior step. After editing fields in that step, the user should be returned to the confirmation page.
-
-// Write tests and use Nighwatch.js to confirm your entire checkout flow is working correctly.
+// TODO: Implement unit tests
 
 class App extends React.Component {
   constructor(props) {
@@ -28,18 +23,24 @@ class App extends React.Component {
       expDate: "",
       cvv: "",
       billingZip: "",
-      formDisplayed: 0
+      formDisplayed: 0,
+      isOkayToProceed: true
     };
     this.handleNextButton = this.handleNextButton.bind(this);
+    this.handleBackButton = this.handleBackButton.bind(this);
     this.handlePurchase = this.handlePurchase.bind(this);
     this.handleInput = this.handleInput.bind(this);
+  }
+
+  handleBackButton() {
+    let form = this.state.formDisplayed;
+    this.setState({ formDisplayed: form - 1 });
   }
 
   handleNextButton() {
     let form = this.state.formDisplayed;
     this.setState({ formDisplayed: form + 1 });
 
-    // save data to server/db
     //TODO: Add node ENV variables
     this.postData(`http://localhost:3000`, JSON.stringify(this.state));
   }
@@ -49,8 +50,9 @@ class App extends React.Component {
   }
 
   handlePurchase() {
-    alert("purchase complete");
     this.setState({ formDisplayed: 0 });
+
+    //TODO: Add node ENV variables
     this.postData(`http://localhost:3000/purchase`, JSON.stringify(this.state));
   }
 
@@ -59,7 +61,6 @@ class App extends React.Component {
   }
 
   postData(url = ``, data = { hello: "world" }) {
-    console.log("posting data", data);
     // Default options are marked with *
     return fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -95,6 +96,7 @@ class App extends React.Component {
 
         {this.state.formDisplayed === 1 ? (
           <FormOne
+            handleBackButton={this.handleBackButton}
             handleNextButton={this.handleNextButton}
             handleInput={this.handleInput}
             name={this.props.name}
@@ -102,12 +104,15 @@ class App extends React.Component {
         ) : null}
         {this.state.formDisplayed === 2 ? (
           <FormTwo
+            handleBackButton={this.handleBackButton}
             handleNextButton={this.handleNextButton}
             handleInput={this.handleInput}
           />
         ) : null}
         {this.state.formDisplayed === 3 ? (
           <FormThree
+            formDisplayed={this.state.formDisplayed}
+            handleBackButton={this.handleBackButton}
             handleNextButton={this.handleNextButton}
             handleInput={this.handleInput}
             handlePurchase={this.handlePurchase}
@@ -126,6 +131,10 @@ class FormOne extends React.Component {
   render() {
     return (
       <div className="form">
+        <NavButtons
+          handleNextButton={this.props.handleNextButton}
+          handleBackButton={this.props.handleBackButton}
+        />
         <h2 className="form-title">1 / 3</h2>
         <div className="input-container">
           <h3 className="address-title">Account Information</h3>
@@ -149,12 +158,11 @@ class FormOne extends React.Component {
           <input
             type="text"
             id="myinput"
-            placeholder="iliekcheese"
+            placeholder="ilikecheese"
             value={this.props.password}
             onChange={e => this.props.handleInput(e, "password")}
           />
         </div>
-        <NextButton handleNextButton={this.props.handleNextButton} />
       </div>
     );
   }
@@ -168,9 +176,13 @@ class FormTwo extends React.Component {
   render() {
     return (
       <div className="form">
+        <NavButtons
+          handleNextButton={this.props.handleNextButton}
+          handleBackButton={this.props.handleBackButton}
+        />
         <h2 className="form-title">2 / 3</h2>
         <div className="input-container">
-          <h3 className="address-title">Address</h3>
+          <h3 className="address-title">Address Information</h3>
 
           <p className="form-subtitle">Line 1</p>
           <input
@@ -213,7 +225,6 @@ class FormTwo extends React.Component {
             onChange={e => this.props.handleInput(e, "zip")}
           />
         </div>
-        <NextButton handleNextButton={this.props.handleNextButton} />
       </div>
     );
   }
@@ -227,6 +238,11 @@ class FormThree extends React.Component {
   render() {
     return (
       <div className="form">
+        <NavButtons
+          formDisplayed={this.props.formDisplayed}
+          handleNextButton={this.props.handleNextButton}
+          handleBackButton={this.props.handleBackButton}
+        />
         <h2 className="form-title">3 / 3</h2>
 
         <div className="input-container">
@@ -262,17 +278,27 @@ class FormThree extends React.Component {
   }
 }
 
-class NextButton extends React.Component {
+class NavButtons extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    const backButton = (
+      <button id="back-button" onClick={() => this.props.handleBackButton()}>
+        ◀
+      </button>
+    );
+    const forwardButton = (
+      <button id="next-button" onClick={() => this.props.handleNextButton()}>
+        ▶
+      </button>
+    );
+    const blankButton = <button id="blank-button">▶</button>;
     return (
       <div className="next-button-container">
-        <button id="next-button" onClick={() => this.props.handleNextButton()}>
-          ➞
-        </button>
+        {backButton}
+        {this.props.formDisplayed === 3 ? blankButton : forwardButton}
       </div>
     );
   }
@@ -290,7 +316,7 @@ class PurchaseButton extends React.Component {
           id="purchase-button"
           onClick={() => this.props.handlePurchase()}
         >
-          submit
+          Submit
         </button>
       </div>
     );

@@ -14,8 +14,6 @@
 // db['COLLECTION-NAME'].find({})
 // db['COLLECTION-NAME'].remove({})
 
-console.log("the db");
-
 let mongoClient = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017/test";
 
