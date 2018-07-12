@@ -13,7 +13,9 @@ body {
 
 #title {
   font-size: 3.5rem;
-  margin: 5rem auto;
+  letter-spacing: 0.25rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 #gameboard {
@@ -65,4 +67,14 @@ body {
   border-radius: 50px/50px;
   box-shadow: 2px 2px 1px darkgray;
   z-index: 100;
+}
+
+.red {
+  color: red;
+}
+
+.title-container {
+  border-bottom: 1rem solid red;
+  margin: 5rem auto;
+  max-width: 75vmin;
 }

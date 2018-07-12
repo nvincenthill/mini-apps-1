@@ -60,7 +60,9 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1 id="title">CONNECT FOUR</h1>
+        <div className="title-container">
+          <h1 id="title">CONNECT FOUR</h1>
+        </div>
         <GameBoard
           gameState={this.state.gameState}
           handleClick={this.handleClick}
