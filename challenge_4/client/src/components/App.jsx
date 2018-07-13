@@ -1,6 +1,7 @@
 // TODO: Fix gravity for all cardinal directions
 // TODO: Display user name on win
 // TODO: Validate diagonal wins
+// TODO: Graphically represent winning pieces to the user
 
 import React from "react";
 import GameBoard from "./GameBoard.jsx";
@@ -53,14 +54,27 @@ class App extends React.Component {
 
         // handle board rotation
         if (this.state.isInsane) {
-          let currentRotation = this.state.currentRotation;
-          let cardinalRotation = this.state.cardinalRotation;
+          var currentRotation = this.state.currentRotation;
+          var cardinalRotation = this.state.cardinalRotation;
+          if (cardinalRotation === 3) {
+            cardinalRotation = 0;
+          }
           this.setState({ currentRotation: currentRotation + 90 });
           this.setState({ cardinalRotation: cardinalRotation + 1 });
         }
 
         // apply gravity
-        let gravedBoard = this.applyGravity(board);
+        let gravedBoard;
+        console.log("card", this.state.cardinalRotation);
+        if (this.state.cardinalRotation === 3) {
+          gravedBoard = this.applyGravityDown(board);
+        } else if (this.state.cardinalRotation === 0) {
+          gravedBoard = this.applyGravityLeft(board);
+        } else if (this.state.cardinalRotation === 1) {
+          gravedBoard = this.applyGravityUp(board);
+        } else {
+          gravedBoard = this.applyGravityRight(board);
+        }
 
         //check for wins/draws
         this.validateBoard(gravedBoard);
@@ -99,24 +113,81 @@ class App extends React.Component {
     return newBoard;
   }
 
-  applyGravity(board) {
-    console.log("applying gravity");
+  applyGravityDown(board) {
+    console.log("applying gravity down");
     // console.table(newBoard);
     let newBoard = board;
 
-    if (this.state.cardinalRotation === 0) {
-      for (let i = 0; i < board.length - 1; i++) {
-        let currentRow = board[i];
-        let nextRow = board[i + 1];
-        for (let j = 0; j < board[i].length; j++) {
-          if (nextRow[j] === 0) {
-            nextRow[j] = currentRow[j];
-            currentRow[j] = 0;
-          }
+    for (let i = 0; i < board.length - 1; i++) {
+      let currentRow = board[i];
+      let nextRow = board[i + 1];
+      for (let j = 0; j < board[i].length; j++) {
+        if (nextRow[j] === 0) {
+          nextRow[j] = currentRow[j];
+          currentRow[j] = 0;
         }
       }
     }
-    // else if (this.state.cardinalRotation === 0)
+
+    // console.table(newBoard);
+    return newBoard;
+  }
+
+  applyGravityUp(board) {
+    console.log("applying gravity up");
+    // console.table(newBoard);
+    let newBoard = board;
+
+    for (let i = 0; i < board.length - 1; i++) {
+      let currentRow = board[i];
+      let nextRow = board[i + 1];
+      for (let j = 0; j < board[i].length; j++) {
+        if (nextRow[j] === 0) {
+          nextRow[j] = currentRow[j];
+          currentRow[j] = 0;
+        }
+      }
+    }
+
+    // console.table(newBoard);
+    return newBoard;
+  }
+
+  applyGravityLeft(board) {
+    console.log("applying gravity left");
+    // console.table(newBoard);
+    let newBoard = board;
+
+    for (let i = 0; i < board.length - 1; i++) {
+      let currentRow = board[i];
+      let nextRow = board[i + 1];
+      for (let j = 0; j < board[i].length; j++) {
+        if (nextRow[j] === 0) {
+          nextRow[j] = currentRow[j];
+          currentRow[j] = 0;
+        }
+      }
+    }
+
+    // console.table(newBoard);
+    return newBoard;
+  }
+
+  applyGravityRight(board) {
+    console.log("applying gravity right");
+    // console.table(newBoard);
+    let newBoard = board;
+
+    for (let i = 0; i < board.length - 1; i++) {
+      let currentRow = board[i];
+      let nextRow = board[i + 1];
+      for (let j = 0; j < board[i].length; j++) {
+        if (nextRow[j] === 0) {
+          nextRow[j] = currentRow[j];
+          currentRow[j] = 0;
+        }
+      }
+    }
 
     // console.table(newBoard);
     return newBoard;
@@ -163,7 +234,9 @@ class App extends React.Component {
       isPlaying: true,
       gameState: board,
       title: "CONNECT FOUR",
-      piecesPlaced: 0
+      piecesPlaced: 0,
+      currentRotation: 0,
+      cardinalRotation: 0
     });
   }
 
