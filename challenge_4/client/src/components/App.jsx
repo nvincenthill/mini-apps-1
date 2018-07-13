@@ -1,3 +1,7 @@
+// TODO: Fix gravity for all cardinal directions
+// TODO: Display user name on win
+// TODO: Validate diagonal wins
+
 import React from "react";
 import GameBoard from "./GameBoard.jsx";
 
