@@ -158,7 +158,8 @@ class App extends React.Component {
     this.setState({
       isPlaying: true,
       gameState: board,
-      title: "CONNECT FOUR"
+      title: "CONNECT FOUR",
+      piecesPlaced: 0
     });
   }
 
