@@ -15,34 +15,44 @@ class App extends React.Component {
         [0, 0, 0, 0, 0, 0, 0]
       ],
       isPlaying: true,
-      isInsane: true,
+      isInsane: false,
       currentRotation: 0,
+      cardinalRotation: 0,
       nextPiece: 1,
-      title: "CONNECT FOUR"
+      piecesPlaced: 0,
+      title: "CONNECT FOUR",
+      isInsaneClass: ""
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
+    this.toggleInsane = this.toggleInsane.bind(this);
   }
 
   handleClick(row, idx) {
-    // alert(`Row ${row} number ${idx} clicked`);
+    let board = this.state.gameState.slice();
+
     if (this.state.isPlaying) {
-      let board = this.state.gameState;
       if (board[row - 1][idx] === 0) {
         // get next piece
         this.handleNextPiece();
 
         // place piece
         board[row - 1][idx] = this.state.nextPiece;
-
+        let count = this.state.piecesPlaced;
+        this.setState({ piecesPlaced: count + 1 });
+        if (count + 1 === 49) {
+          this.handleDraw();
+        }
         // rotate game state
         // let rotatedBoard = this.rotateGameState(board);
 
         // handle board rotation
         if (this.state.isInsane) {
           let currentRotation = this.state.currentRotation;
+          let cardinalRotation = this.state.cardinalRotation;
           this.setState({ currentRotation: currentRotation + 90 });
+          this.setState({ cardinalRotation: cardinalRotation + 1 });
         }
 
         // apply gravity
@@ -51,7 +61,7 @@ class App extends React.Component {
         //check for wins/draws
         this.validateBoard(gravedBoard);
 
-        console.table(gravedBoard);
+        // set the new model in state
         this.setState({ gameState: gravedBoard });
       }
     }
@@ -90,18 +100,19 @@ class App extends React.Component {
     // console.table(newBoard);
     let newBoard = board;
 
-    // if (this.state.currentRotation === 0) {
-    for (let i = 0; i < board.length - 1; i++) {
-      let currentRow = board[i];
-      let nextRow = board[i + 1];
-      for (let j = 0; j < board[i].length; j++) {
-        if (nextRow[j] === 0) {
-          nextRow[j] = currentRow[j];
-          currentRow[j] = 0;
+    if (this.state.cardinalRotation === 0) {
+      for (let i = 0; i < board.length - 1; i++) {
+        let currentRow = board[i];
+        let nextRow = board[i + 1];
+        for (let j = 0; j < board[i].length; j++) {
+          if (nextRow[j] === 0) {
+            nextRow[j] = currentRow[j];
+            currentRow[j] = 0;
+          }
         }
       }
     }
-    // } else if ()
+    // else if (this.state.cardinalRotation === 0)
 
     // console.table(newBoard);
     return newBoard;
@@ -114,21 +125,6 @@ class App extends React.Component {
     if (cols || rows || diags) {
       this.handleWin();
     }
-    let draw = this.checkForDraw(board);
-    if (draw) {
-      this.handleDraw();
-    }
-  }
-
-  checkForDraw(board) {
-    for (let i = 0; i < board[0]; i++) {
-      for (let j = 0; j < board[i]; j++) {
-        if (board[i][j] === 0) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   handleDraw() {
@@ -149,18 +145,34 @@ class App extends React.Component {
 
   handleRestart() {
     console.log("restarting");
+    // let board = this.state.gameState.slice();
+    let board = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
+    ];
     this.setState({
       isPlaying: true,
-      gameState: [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0]
-      ]
+      gameState: board,
+      title: "CONNECT FOUR"
     });
+  }
+
+  toggleInsane() {
+    let isInsane = this.state.isInsane;
+    this.setState({ isInsane: !isInsane });
+    let isInsaneClass = this.state.isInsaneClass;
+    if (isInsaneClass === "") {
+      isInsaneClass = "insane";
+    } else {
+      isInsaneClass = "";
+    }
+
+    this.setState({ isInsaneClass: isInsaneClass });
   }
 
   checkRows(board, columns, rows) {
@@ -246,12 +258,29 @@ class App extends React.Component {
     return false;
   }
 
+  componentWillMount() {
+    let player1 = prompt("Enter player one's name");
+    let player2 = prompt("Enter player two's name");
+    this.setState({ playerOneName: player1, playerOneName: player2 });
+  }
+
   render() {
     let restartButton = (
       <button id="restart-button" onClick={this.handleRestart}>
         RESTART
       </button>
     );
+
+    let insaneButton = (
+      <button
+        id="insane-button"
+        className={this.state.isInsaneClass}
+        onClick={this.toggleInsane}
+      >
+        INSANE MODE
+      </button>
+    );
+
     return (
       <React.Fragment>
         <div className="title-container">
@@ -261,8 +290,12 @@ class App extends React.Component {
           gameState={this.state.gameState}
           handleClick={this.handleClick}
           currentRotation={this.state.currentRotation}
+          cardinalRotation={this.state.cardinalRotation}
         />
-        <div className="button-container">{restartButton}</div>
+        <div className="button-container">
+          {restartButton}
+          {insaneButton}
+        </div>
       </React.Fragment>
     );
   }

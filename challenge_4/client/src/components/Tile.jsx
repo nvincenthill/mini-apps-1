@@ -4,8 +4,7 @@ class Tile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      colorDisplayed: null,
-      needsToRerender: false
+      colorDisplayed: null
     };
   }
 
@@ -18,8 +17,24 @@ class Tile extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
-    this.updateTile();
+  componentDidUpdate(prevProps) {
+    if (this.props.gameState !== prevProps.gameState) {
+      this.updateTile();
+      if (
+        JSON.stringify(this.props.gameState) ===
+        JSON.stringify([
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0]
+        ])
+      ) {
+        this.setState({ colorDisplayed: null });
+      }
+    }
   }
 
   componentDidMount() {

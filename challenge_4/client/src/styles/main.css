@@ -72,13 +72,14 @@ body {
 }
 
 .title-container {
-  border-bottom: 1rem solid red;
+  border-bottom: 1rem solid var(--main-font-color);
   margin: 5rem auto;
   max-width: 75vmin;
 }
 
 .button-container {
   margin-top: 5rem;
+  height: 10vmax;
 }
 
 button {
@@ -117,10 +118,29 @@ button {
 
 #restart-button {
   /* display: none; */
-  max-height: 6px;
   transition: 1s ease-in-out;
 }
 
 #restart-button:focus {
   outline: none;
+}
+
+#insane-button:hover {
+  background: red;
+  transition: 1s ease-in-out;
+  max-height: 10vmax;
+}
+
+#insane-button {
+  /* display: none; */
+  transition: 1s ease-in-out;
+}
+
+#insane-button:focus {
+  outline: none;
+}
+
+.insane {
+  color: red;
+  transform: scale(1.25);
 }
