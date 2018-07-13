@@ -56,7 +56,6 @@ body {
   width: 4.75vmax;
   height: 4.75vmax;
   border-radius: 50px/50px;
-  box-shadow: 2px 2px 1px darkgray;
   z-index: 100;
 }
 
@@ -65,7 +64,6 @@ body {
   width: 4.75vmax;
   height: 4.75vmax;
   border-radius: 50px/50px;
-  box-shadow: 2px 2px 1px darkgray;
   z-index: 100;
 }
 
@@ -77,4 +75,52 @@ body {
   border-bottom: 1rem solid red;
   margin: 5rem auto;
   max-width: 75vmin;
+}
+
+.button-container {
+  margin-top: 5rem;
+}
+
+button {
+  font-family: Helvetica, sans-serif;
+  font-size: 3rem;
+  height: 10vmax;
+  width: 35vmax;
+  line-height: 3rem;
+  text-align: center;
+  padding: 0.4rem 1rem 0rem 1rem;
+  color: #eee;
+  background: #222;
+  font-weight: bold;
+  vertical-align: middle;
+  border: 0;
+  /* outline: 1rem solid var(--main-font-color); */
+  transition: 0.5s ease-in-out;
+}
+
+#start-button:hover {
+  transform: scale(1.15) translateY(2vmax);
+  transition: 0.5s cubic-bezier(0.18, 1.52, 0.4, 0.87);
+}
+
+#start-button {
+  background: green;
+  z-index: 2000;
+  transition: 0.25 ease-in-out;
+}
+
+#restart-button:hover {
+  background: red;
+  transition: 1s ease-in-out;
+  max-height: 10vmax;
+}
+
+#restart-button {
+  /* display: none; */
+  max-height: 6px;
+  transition: 1s ease-in-out;
+}
+
+#restart-button:focus {
+  outline: none;
 }

@@ -106,7 +106,7 @@ button {
 }
 
 #restart-button {
-  display: none;
+  /* display: none; */
   max-height: 6px;
   transition: 1s ease-in-out;
 }

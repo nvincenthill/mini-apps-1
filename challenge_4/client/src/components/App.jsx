@@ -1,11 +1,10 @@
 import React from "react";
-// import GameBoard from "GameBoard.jsx";
+import GameBoard from "./GameBoard.jsx";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hello: "world",
       gameState: [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -18,10 +17,12 @@ class App extends React.Component {
       isPlaying: true,
       isInsane: true,
       currentRotation: 0,
-      nextPiece: 1
+      nextPiece: 1,
+      title: "CONNECT FOUR"
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
   }
 
   handleClick(row, idx) {
@@ -29,15 +30,29 @@ class App extends React.Component {
     if (this.state.isPlaying) {
       let board = this.state.gameState;
       if (board[row - 1][idx] === 0) {
+        // get next piece
         this.handleNextPiece();
+
+        // place piece
         board[row - 1][idx] = this.state.nextPiece;
-        this.applyGravity();
-        this.validateBoard();
-        console.table(this.state.gameState);
+
+        // rotate game state
+        // let rotatedBoard = this.rotateGameState(board);
+
+        // handle board rotation
         if (this.state.isInsane) {
           let currentRotation = this.state.currentRotation;
           this.setState({ currentRotation: currentRotation + 90 });
         }
+
+        // apply gravity
+        let gravedBoard = this.applyGravity(board);
+
+        //check for wins/draws
+        this.validateBoard(gravedBoard);
+
+        console.table(gravedBoard);
+        this.setState({ gameState: gravedBoard });
       }
     }
   }
@@ -51,167 +66,204 @@ class App extends React.Component {
     }
   }
 
-  applyGravity() {}
+  rotateGameState(board) {
+    console.log("rotating board state");
+    let newBoard = [];
+    console.table(board);
 
-  validateBoard() {
-    console.log("validating board");
+    for (let i = 0; i < board[0].length; i++) {
+      newBoard.push([]);
+    }
+
+    for (let i = 0; i < board[0].length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        newBoard[j].unshift(board[i][j]);
+      }
+    }
+
+    console.table(newBoard);
+    return newBoard;
+  }
+
+  applyGravity(board) {
+    console.log("applying gravity");
+    // console.table(newBoard);
+    let newBoard = board;
+
+    // if (this.state.currentRotation === 0) {
+    for (let i = 0; i < board.length - 1; i++) {
+      let currentRow = board[i];
+      let nextRow = board[i + 1];
+      for (let j = 0; j < board[i].length; j++) {
+        if (nextRow[j] === 0) {
+          nextRow[j] = currentRow[j];
+          currentRow[j] = 0;
+        }
+      }
+    }
+    // } else if ()
+
+    // console.table(newBoard);
+    return newBoard;
+  }
+
+  validateBoard(board) {
+    let cols = this.checkColums(board, 7, 7);
+    let rows = this.checkRows(board, 7, 7);
+    let diags = this.checkDiags(board, 7, 7);
+    if (cols || rows || diags) {
+      this.handleWin();
+    }
+    let draw = this.checkForDraw(board);
+    if (draw) {
+      this.handleDraw();
+    }
+  }
+
+  checkForDraw(board) {
+    for (let i = 0; i < board[0]; i++) {
+      for (let j = 0; j < board[i]; j++) {
+        if (board[i][j] === 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  handleDraw() {
+    this.setState({ title: "THE GAME WAS A DRAW" });
+    this.setState({ isPlaying: false });
+  }
+
+  handleWin() {
+    let winner;
+    if (this.state.nextPiece === -1) {
+      winner = "RED WINS!";
+    } else {
+      winner = "BLACK WINS!";
+    }
+    this.setState({ title: winner });
+    this.setState({ isPlaying: false });
+  }
+
+  handleRestart() {
+    console.log("restarting");
+    this.setState({
+      isPlaying: true,
+      gameState: [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0]
+      ]
+    });
+  }
+
+  checkRows(board, columns, rows) {
+    for (let y = 0; y < columns; y++) {
+      let consecutiveBlack = 0;
+      let consecutiveRed = 0;
+      for (let x = 0; x < rows; x++) {
+        if (board[y][x] === 1) {
+          consecutiveBlack++;
+          consecutiveRed = 0;
+          if (consecutiveBlack === 4) {
+            return true;
+          }
+        }
+        if (board[y][x] === -1) {
+          consecutiveRed++;
+          consecutiveBlack = 0;
+          if (consecutiveRed === 4) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  checkColums(board, columns, rows) {
+    for (let x = 0; x < rows; x++) {
+      let consecutiveBlack = 0;
+      let consecutiveRed = 0;
+      for (let y = 0; y < columns; y++) {
+        if (board[y][x] === 1) {
+          consecutiveBlack++;
+          consecutiveRed = 0;
+          if (consecutiveBlack === 4) {
+            return true;
+          }
+        }
+        if (board[y][x] === -1) {
+          consecutiveRed++;
+          consecutiveBlack = 0;
+          if (consecutiveRed === 4) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  checkDiags(board, columns, rows) {
+    let rightDiags = this.checkDiagsRight(board, columns, rows);
+    let leftDiags = this.checkDiagsLeft(board, columns, rows);
+    if (leftDiags || rightDiags) {
+      return true;
+    }
+    return false;
+  }
+
+  checkDiagsLeft(board, columns, rows) {
+    return false;
+  }
+
+  checkDiagsRight(board, columns, rows) {
+    // for (let i = 0; i < columns - 4; i++) {
+    //   let consecutiveBlack = 0;
+    //   let consecutiveRed = 0;
+    //   if (board[i][i] === 1) {
+    //     consecutiveBlack++;
+    //     consecutiveRed = 0;
+    //     if (consecutiveBlack === 4) {
+    //       return true;
+    //     }
+    //   }
+    //   if (board[i][i] === -1) {
+    //     consecutiveRed++;
+    //     consecutiveBlack = 0;
+    //     if (consecutiveRed === 4) {
+    //       return true;
+    //     }
+    //   }
+    // }
+    return false;
   }
 
   render() {
+    let restartButton = (
+      <button id="restart-button" onClick={this.handleRestart}>
+        RESTART
+      </button>
+    );
     return (
       <React.Fragment>
         <div className="title-container">
-          <h1 id="title">CONNECT FOUR</h1>
+          <h1 id="title">{this.state.title}</h1>
         </div>
         <GameBoard
           gameState={this.state.gameState}
           handleClick={this.handleClick}
           currentRotation={this.state.currentRotation}
         />
+        <div className="button-container">{restartButton}</div>
       </React.Fragment>
-    );
-  }
-}
-
-class GameBoard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    let row1 = this.props.gameState[0].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={1}
-        />
-      );
-    });
-    let row2 = this.props.gameState[1].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={2}
-        />
-      );
-    });
-    let row3 = this.props.gameState[2].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={3}
-        />
-      );
-    });
-    let row4 = this.props.gameState[3].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={4}
-        />
-      );
-    });
-    let row5 = this.props.gameState[4].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={5}
-        />
-      );
-    });
-    let row6 = this.props.gameState[5].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={6}
-        />
-      );
-    });
-    let row7 = this.props.gameState[6].map((tile, index) => {
-      return (
-        <Tile
-          key={index}
-          gameState={this.props.gameState}
-          handleClick={this.props.handleClick}
-          index={index}
-          row={7}
-        />
-      );
-    });
-
-    let rotatedStyle = {
-      transform: `rotate(${this.props.currentRotation}deg)`
-    };
-
-    return (
-      <div id="gameboard" style={rotatedStyle}>
-        {row1}
-        {row2}
-        {row3}
-        {row4}
-        {row5}
-        {row6}
-        {row7}
-      </div>
-    );
-  }
-}
-
-class Tile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      colorDisplayed: null,
-      needsToRerender: false
-    };
-  }
-
-  updateTile() {
-    if (this.props.gameState[this.props.row - 1][this.props.index] === 1) {
-      this.setState({ colorDisplayed: "black" });
-    }
-    if (this.props.gameState[this.props.row - 1][this.props.index] === -1) {
-      this.setState({ colorDisplayed: "red" });
-    }
-  }
-
-  componentWillReceiveProps() {
-    this.updateTile();
-  }
-
-  componentDidMount() {
-    this.updateTile();
-  }
-
-  render() {
-    let RedGamePiece = <div className="token-red" />;
-    let BlackGamePiece = <div className="token-black" />;
-
-    return (
-      <div
-        className="tile"
-        onClick={() => this.props.handleClick(this.props.row, this.props.index)}
-      >
-        {this.state.colorDisplayed === "red" ? RedGamePiece : null}
-        {this.state.colorDisplayed === "black" ? BlackGamePiece : null}
-      </div>
     );
   }
 }
