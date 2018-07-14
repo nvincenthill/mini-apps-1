@@ -3,6 +3,8 @@
 // TODO: Validate diagonal wins
 // TODO: Graphically represent winning pieces to the user
 
+// TODO: Fix up, left, right gravity functions
+
 import React from "react";
 import GameBoard from "./GameBoard.jsx";
 
@@ -55,25 +57,28 @@ class App extends React.Component {
         // handle board rotation
         if (this.state.isInsane) {
           var currentRotation = this.state.currentRotation;
-          var cardinalRotation = this.state.cardinalRotation;
-          if (cardinalRotation === 3) {
-            cardinalRotation = 0;
-          }
           this.setState({ currentRotation: currentRotation + 90 });
-          this.setState({ cardinalRotation: cardinalRotation + 1 });
+
+          var cardinalRotation = this.state.cardinalRotation;
+          cardinalRotation++;
+          cardinalRotation = cardinalRotation % 4;
+          this.setState({ cardinalRotation: cardinalRotation });
         }
 
         // apply gravity
         let gravedBoard;
-        console.log("card", this.state.cardinalRotation);
-        if (this.state.cardinalRotation === 3) {
-          gravedBoard = this.applyGravityDown(board);
-        } else if (this.state.cardinalRotation === 0) {
-          gravedBoard = this.applyGravityLeft(board);
-        } else if (this.state.cardinalRotation === 1) {
-          gravedBoard = this.applyGravityUp(board);
+        if (this.state.isInsane) {
+          if (this.state.cardinalRotation === 3) {
+            gravedBoard = this.applyGravityDown(board);
+          } else if (this.state.cardinalRotation === 0) {
+            gravedBoard = this.applyGravityLeft(board);
+          } else if (this.state.cardinalRotation === 1) {
+            gravedBoard = this.applyGravityUp(board);
+          } else {
+            gravedBoard = this.applyGravityRight(board);
+          }
         } else {
-          gravedBoard = this.applyGravityRight(board);
+          gravedBoard = this.applyGravityDown(board);
         }
 
         //check for wins/draws
@@ -115,81 +120,92 @@ class App extends React.Component {
 
   applyGravityDown(board) {
     console.log("applying gravity down");
-    // console.table(newBoard);
-    let newBoard = board;
 
-    for (let i = 0; i < board.length - 1; i++) {
-      let currentRow = board[i];
-      let nextRow = board[i + 1];
-      for (let j = 0; j < board[i].length; j++) {
-        if (nextRow[j] === 0) {
-          nextRow[j] = currentRow[j];
-          currentRow[j] = 0;
+    let newBoard = board;
+    console.table(newBoard);
+    let n = 0;
+    while (n < 6) {
+      for (let i = 0; i < board.length - 1; i++) {
+        let currentRow = board[i];
+        let nextRow = board[i + 1];
+        for (let j = 0; j < board[i].length; j++) {
+          if (nextRow[j] === 0) {
+            nextRow[j] = currentRow[j];
+            currentRow[j] = 0;
+          }
         }
       }
+      n++;
     }
-
-    // console.table(newBoard);
+    console.table(newBoard);
     return newBoard;
   }
 
   applyGravityUp(board) {
     console.log("applying gravity up");
-    // console.table(newBoard);
     let newBoard = board;
-
-    for (let i = 0; i < board.length - 1; i++) {
-      let currentRow = board[i];
-      let nextRow = board[i + 1];
-      for (let j = 0; j < board[i].length; j++) {
-        if (nextRow[j] === 0) {
-          nextRow[j] = currentRow[j];
-          currentRow[j] = 0;
+    console.table(newBoard);
+    let n = 0;
+    while (n < 6) {
+      for (let i = 0; i < board.length - 1; i++) {
+        let currentRow = board[i];
+        let nextRow = board[i + 1];
+        for (let j = 0; j < board[i].length; j++) {
+          if (currentRow[j] === 0) {
+            currentRow[j] = nextRow[j];
+            nextRow[j] = 0;
+          }
         }
       }
+      n++;
     }
 
-    // console.table(newBoard);
+    console.table(newBoard);
     return newBoard;
   }
 
   applyGravityLeft(board) {
     console.log("applying gravity left");
-    // console.table(newBoard);
     let newBoard = board;
-
-    for (let i = 0; i < board.length - 1; i++) {
-      let currentRow = board[i];
-      let nextRow = board[i + 1];
-      for (let j = 0; j < board[i].length; j++) {
-        if (nextRow[j] === 0) {
-          nextRow[j] = currentRow[j];
-          currentRow[j] = 0;
+    console.table(newBoard);
+    for (let i = 0; i < newBoard.length; i++) {
+      for (let j = 0; j < newBoard[i].length; j++) {
+        let count = 0;
+        if (newBoard[i][j] === 0) {
+          newBoard[i].splice(j, 1);
+          count++;
+        }
+        for (let k = 0; k < count; k++) {
+          newBoard[i].unshift(0);
         }
       }
     }
-
-    // console.table(newBoard);
+    console.table(newBoard);
     return newBoard;
   }
 
   applyGravityRight(board) {
     console.log("applying gravity right");
-    // console.table(newBoard);
     let newBoard = board;
-
-    for (let i = 0; i < board.length - 1; i++) {
-      let currentRow = board[i];
-      let nextRow = board[i + 1];
-      for (let j = 0; j < board[i].length; j++) {
-        if (nextRow[j] === 0) {
-          nextRow[j] = currentRow[j];
-          currentRow[j] = 0;
+    console.table(newBoard);
+    let n = 0;
+    while (n < 6) {
+      for (let i = 0; i < newBoard.length; i++) {
+        for (let j = 0; j < newBoard[i].length; j++) {
+          let count = 0;
+          if (newBoard[i][j] === 0) {
+            newBoard[i].splice(j, 1);
+            count++;
+          }
+          for (let k = 0; k < count; k++) {
+            newBoard[i].push(0);
+          }
         }
       }
+      n++;
     }
 
-    // console.table(newBoard);
+    console.table(newBoard);
     return newBoard;
   }
 
@@ -337,9 +353,9 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    let player1 = prompt("Enter player one's name");
-    let player2 = prompt("Enter player two's name");
-    this.setState({ playerOneName: player1, playerOneName: player2 });
+    // let player1 = prompt("Enter player one's name");
+    // let player2 = prompt("Enter player two's name");
+    // this.setState({ playerOneName: player1, playerOneName: player2 });
   }
 
   render() {

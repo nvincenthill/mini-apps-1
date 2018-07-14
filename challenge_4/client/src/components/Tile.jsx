@@ -11,9 +11,12 @@ class Tile extends React.Component {
   updateTile() {
     if (this.props.gameState[this.props.row - 1][this.props.index] === 1) {
       this.setState({ colorDisplayed: "black" });
-    }
-    if (this.props.gameState[this.props.row - 1][this.props.index] === -1) {
+    } else if (
+      this.props.gameState[this.props.row - 1][this.props.index] === -1
+    ) {
       this.setState({ colorDisplayed: "red" });
+    } else {
+      this.setState({ colorDisplayed: null });
     }
   }
 
