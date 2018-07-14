@@ -1,4 +1,4 @@
-// TODO: Fix gravity for all cardinal directions
+// TODO: Fix win validation
 // TODO: Display user name on win
 // TODO: Validate diagonal wins
 // TODO: Graphically represent winning pieces to the user
@@ -28,7 +28,9 @@ class App extends React.Component {
       nextPiece: 1,
       piecesPlaced: 0,
       title: "CONNECT FOUR",
-      isInsaneClass: ""
+      isInsaneClass: "",
+      playerOneName: "Black",
+      playerTwoName: "Red"
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -213,8 +215,10 @@ class App extends React.Component {
     let cols = this.checkColums(board, 7, 7);
     let rows = this.checkRows(board, 7, 7);
     let diags = this.checkDiags(board, 7, 7);
-    if (cols || rows || diags) {
-      this.handleWin();
+    if (cols === "Black" || rows === "Black" || diags === "Black") {
+      this.handleWin(1);
+    } else if (cols === "Red" || rows === "Red" || diags === "Red") {
+      this.handleWin(-1);
     }
   }
 
@@ -223,12 +227,12 @@ class App extends React.Component {
     this.setState({ isPlaying: false });
   }
 
-  handleWin() {
+  handleWin(playerThatOne) {
     let winner;
-    if (this.state.nextPiece === -1) {
-      winner = "RED WINS!";
+    if (playerThatOne === -1) {
+      winner = `${this.state.playerTwoName.toUpperCase()} WINS!`;
     } else {
-      winner = "BLACK WINS!";
+      winner = `${this.state.playerOneName.toUpperCase()} WINS!`;
     }
     this.setState({ title: winner });
     this.setState({ isPlaying: false });
@@ -277,15 +281,21 @@ class App extends React.Component {
         if (board[y][x] === 1) {
           consecutiveBlack++;
           consecutiveRed = 0;
+          if (board[y][x] === 0) {
+            consecutiveBlack = 0;
+          }
           if (consecutiveBlack === 4) {
-            return true;
+            return "Black";
           }
         }
         if (board[y][x] === -1) {
           consecutiveRed++;
           consecutiveBlack = 0;
+          if (board[y][x] === 0) {
+            consecutiveRed = 0;
+          }
           if (consecutiveRed === 4) {
-            return true;
+            return "Red";
           }
         }
       }
@@ -301,15 +311,21 @@ class App extends React.Component {
         if (board[y][x] === 1) {
           consecutiveBlack++;
           consecutiveRed = 0;
+          if (board[y][x] === 0) {
+            consecutiveBlack = 0;
+          }
           if (consecutiveBlack === 4) {
-            return true;
+            return "Black";
           }
         }
         if (board[y][x] === -1) {
           consecutiveRed++;
           consecutiveBlack = 0;
+          if (board[y][x] === 0) {
+            consecutiveBlack = 0;
+          }
           if (consecutiveRed === 4) {
-            return true;
+            return "Red";
           }
         }
       }
@@ -353,9 +369,9 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // let player1 = prompt("Enter player one's name");
-    // let player2 = prompt("Enter player two's name");
-    // this.setState({ playerOneName: player1, playerOneName: player2 });
+    let player1 = prompt("Enter player one's name", "Black");
+    let player2 = prompt("Enter player two's name", "Red");
+    this.setState({ playerOneName: player1, playerTwoName: player2 });
   }
 
   render() {
